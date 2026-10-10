@@ -62,6 +62,13 @@
     .desc { font-size: 0.95rem; margin-top: 4px; }
     .tags { font-family: Inter, sans-serif; font-size: 0.8rem; margin-top: 2px; }
     .tags a { margin-right: 12px; }
+    details { margin-top: 2px; }
+    details summary {
+      font-family: Inter, sans-serif; font-size: 0.8rem; color: var(--accent);
+      cursor: pointer; width: fit-content;
+    }
+    details summary:hover { text-decoration: underline; }
+    details .desc { color: var(--muted); margin: 4px 0 2px; }
 
     ul.rows { list-style: none; padding: 0; margin: 0; }
     ul.rows li { display: flex; gap: 16px; margin-bottom: 8px; }
@@ -90,8 +97,7 @@
       <p class="role">PhD student in Mathematics · UniDistance Suisse</p>
       <div class="links">
         <a href="mailto:luca.giudici@fernuni.ch">Email</a>
-        <!-- Un-comment once you've uploaded a web version of your CV as cv.pdf -->
-        <!-- <a href="cv.pdf">CV</a> -->
+        <a href="cv.pdf">CV</a>
         <a href="https://github.com/LucaGiudici96">GitHub</a>
         <!-- Add when you have them:
         <a href="https://orcid.org/0000-0000-0000-0000">ORCID</a>
@@ -113,7 +119,7 @@
     </p>
     <p>
       Interests: projective and conformal geometry · Riemann surfaces ·
-      geometric analysis.
+      geometric analysis · dynamical systems.
     </p>
   </section>
 
@@ -122,19 +128,29 @@
     <li>
       <div class="title">Regularity of Soap-Film-Like Minimal Surfaces</div>
       <div class="meta">Master's thesis, ETH Zürich, 2024 · Advisor: Joaquim Serra</div>
-      <div class="desc">Regularity of sets of finite perimeter modelling soap films, in the framework
-        of geometric measure theory and in accordance with Plateau's laws.</div>
+      <details>
+        <summary>Summary</summary>
+        <div class="desc">A study of regularity results for soap-film-like minimal surfaces,
+          modelled as sets of finite perimeter in geometric measure theory.</div>
+      </details>
     </li>
     <li>
       <div class="title">The Brownian Map</div>
       <div class="meta">Semester thesis, ETH Zürich, 2023 · Advisor: Tom Ilmanen</div>
-      <div class="desc">The continuum random tree, the Brownian map and its homeomorphism to the 2-sphere.</div>
+      <details>
+        <summary>Summary</summary>
+        <div class="desc">An introduction to the continuum random tree and the Brownian map,
+          following the proof that the Brownian map is homeomorphic to the 2-sphere.</div>
+      </details>
     </li>
     <li>
       <div class="title">Lagrange and Markov Spectra</div>
       <div class="meta">Bachelor's thesis, ETH Zürich, 2022 · Advisor: Menny Akka Ginosar</div>
-      <div class="desc">A unified dynamical interpretation of the Lagrange and Markov spectra,
-        and a proof that they have the same Hausdorff dimension.</div>
+      <details>
+        <summary>Summary</summary>
+        <div class="desc">An exposition of the Lagrange and Markov spectra from a dynamical
+          point of view, including the result that both have the same Hausdorff dimension.</div>
+      </details>
       <div class="tags">
         <a href="https://www.research-collection.ethz.ch/handle/20.500.11850/569033">ETH Research Collection</a>
       </div>
@@ -154,7 +170,7 @@
     <li><span class="date">Spring 2026</span><span>Linear Algebra II, UniDistance Suisse</span></li>
     <li><span class="date">Fall 2025</span><span>Analysis I, UniDistance Suisse</span></li>
     <li><span class="date">2024</span><span>Probability and Statistics (Computer Science), ETH Zürich</span></li>
-    <li><span class="date">2023–2025</span><span>Applied Category Theory (Mechanical Engineering), ETH Zürich</span></li>
+    <li><span class="date">2023–</span><span>Applied Category Theory (Mechanical Engineering), ETH Zürich</span></li>
     <li><span class="date">2022, 2023</span><span>Analysis II (Mathematics, Physics, Chemistry), ETH Zürich</span></li>
     <li><span class="date">2022</span><span>Mathematics III: Partial Differential Equations (Chemistry), ETH Zürich</span></li>
     <li><span class="date">2021</span><span>Analysis I (Mathematics, Physics, Chemistry), ETH Zürich</span></li>
