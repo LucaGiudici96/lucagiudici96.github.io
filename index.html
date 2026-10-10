@@ -5,25 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Luca Giudici</title>
   <meta name="description" content="Luca Giudici, PhD student in mathematics at UniDistance Suisse, working in differential geometry and geometric analysis.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <script>
+    // Apply a saved light/dark choice before the page paints
+    try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
+      color-scheme: light;
       --bg: #fbfaf7;
       --text: #1f1f1d;
       --muted: #6b6a65;
       --accent: #2f5d8a;
       --rule: #e4e1d9;
+      --card: #f4f2ec;
     }
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
         --bg: #161615;
         --text: #e8e6e1;
         --muted: #9c9a93;
         --accent: #8ab4dc;
         --rule: #2c2b29;
+        --card: #1e1e1c;
       }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #161615;
+      --text: #e8e6e1;
+      --muted: #9c9a93;
+      --accent: #8ab4dc;
+      --rule: #2c2b29;
+      --card: #1e1e1c;
     }
     * { box-sizing: border-box; }
     body {
@@ -33,8 +53,9 @@
       font-family: "Source Serif 4", Georgia, serif;
       font-size: 18px;
       line-height: 1.65;
+      transition: background-color .2s, color .2s;
     }
-    main { max-width: 720px; margin: 0 auto; padding: 64px 20px 80px; }
+    main { position: relative; max-width: 720px; margin: 0 auto; padding: 64px 20px 80px; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
@@ -49,6 +70,23 @@
     h1 { font-size: 2.2rem; font-weight: 600; margin: 0 0 4px; line-height: 1.2; }
     .role { color: var(--muted); margin: 0 0 12px; }
     .links { font-family: Inter, sans-serif; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+
+    .theme-toggle {
+      position: absolute; top: 20px; right: 20px;
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid var(--rule); background: transparent; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .sun { display: none; }
+    :root[data-theme="dark"] .theme-toggle .sun { display: block; }
+    :root[data-theme="dark"] .theme-toggle .moon { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .theme-toggle .sun { display: block; }
+      :root:not([data-theme="light"]) .theme-toggle .moon { display: none; }
+    }
 
     h2 {
       font-family: Inter, sans-serif; font-size: 0.8rem; font-weight: 500;
@@ -76,6 +114,35 @@
       color: var(--muted); font-family: Inter, sans-serif; font-size: 0.85rem;
       min-width: 96px; flex-shrink: 0; padding-top: 3px;
     }
+
+    /* Mathematical toys */
+    .toy {
+      background: var(--card); border: 1px solid var(--rule); border-radius: 12px;
+      padding: 18px; margin-bottom: 24px;
+    }
+    .toy-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+    .toy-head .title { font-size: 1.05rem; }
+    .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      font-family: Inter, sans-serif; font-size: 0.78rem; color: var(--text);
+      background: var(--bg); border: 1px solid var(--rule); border-radius: 999px;
+      padding: 5px 12px; cursor: pointer; transition: border-color .15s, color .15s;
+    }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+    .toy canvas { display: block; width: 100%; touch-action: none; }
+    #tree-canvas { height: 420px; }
+    #disk-canvas { aspect-ratio: 1 / 1; max-width: 520px; margin: 0 auto; cursor: grab; }
+    #disk-canvas:active { cursor: grabbing; }
+    .caption { font-size: 0.9rem; color: var(--muted); margin: 12px 0 0; }
+    .legend { display: inline-flex; gap: 4px; vertical-align: middle; }
+    .legend i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; }
+
+    /* Outside of mathematics */
+    figure { margin: 0; }
+    .photo { width: 100%; height: auto; border-radius: 12px; display: block; }
+    figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 6px; font-family: Inter, sans-serif; }
+
     footer { margin-top: 64px; font-family: Inter, sans-serif; font-size: 0.8rem; color: var(--muted); }
 
     @media (max-width: 560px) {
@@ -83,14 +150,21 @@
       header { flex-direction: column; align-items: flex-start; gap: 18px; }
       .avatar { width: 104px; height: 104px; font-size: 2rem; }
       ul.rows li { flex-direction: column; gap: 0; margin-bottom: 12px; }
+      .theme-toggle { top: 16px; right: 16px; }
+      .toy { padding: 14px; }
+      #tree-canvas { height: 400px; }
     }
   </style>
 </head>
 <body>
 <main>
 
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch between light and dark mode" title="Light / dark mode">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+  </button>
+
   <header>
-    <!-- Upload a photo named photo.jpg; until then your initials show instead -->
     <div class="avatar">LG<img src="photo.jpg" alt="Portrait of Luca Giudici" onerror="this.remove()"></div>
     <div>
       <h1>Luca Giudici</h1>
@@ -170,7 +244,7 @@
     <li><span class="date">Spring 2026</span><span>Linear Algebra II, UniDistance Suisse</span></li>
     <li><span class="date">Fall 2025</span><span>Analysis I, UniDistance Suisse</span></li>
     <li><span class="date">2024</span><span>Probability and Statistics (Computer Science), ETH Zürich</span></li>
-    <li><span class="date">2023–2025</span><span>Applied Category Theory (Mechanical Engineering), ETH Zürich</span></li>
+    <li><span class="date">2023–</span><span>Applied Category Theory (Mechanical Engineering), ETH Zürich</span></li>
     <li><span class="date">2022, 2023</span><span>Analysis II (Mathematics, Physics, Chemistry), ETH Zürich</span></li>
     <li><span class="date">2022</span><span>Mathematics III: Partial Differential Equations (Chemistry), ETH Zürich</span></li>
     <li><span class="date">2021</span><span>Analysis I (Mathematics, Physics, Chemistry), ETH Zürich</span></li>
@@ -183,7 +257,409 @@
     <li><span class="date">2017–2023</span><span>BSc in Mathematics, ETH Zürich</span></li>
   </ul>
 
+  <h2>Mathematical toys</h2>
+
+  <div class="toy">
+    <div class="toy-head">
+      <span class="title">A random tree</span>
+      <div class="controls">
+        <button class="btn" data-n="300" type="button">Small</button>
+        <button class="btn" data-n="1500" type="button" aria-pressed="true">Medium</button>
+        <button class="btn" data-n="6000" type="button">Large</button>
+        <button class="btn" id="tree-new" type="button">Grow a new tree ↻</button>
+      </div>
+    </div>
+    <canvas id="tree-canvas" aria-label="A uniformly random tree drawn above the random walk excursion that encodes it"></canvas>
+    <p class="caption">
+      A uniformly random tree (root marked by a dot), grown from the random walk excursion
+      drawn underneath: each step up adds a new edge, each step down walks back towards the root.
+      As the number of vertices grows, suitably rescaled random trees converge to
+      Aldous' continuum random tree, the starting point for the Brownian map.
+    </p>
+  </div>
+
+  <div class="toy">
+    <div class="toy-head">
+      <span class="title">The Bolza surface</span>
+      <div class="controls">
+        <button class="btn" id="disk-reset" type="button">Recentre</button>
+      </div>
+    </div>
+    <canvas id="disk-canvas" aria-label="Tiling of the hyperbolic disk by regular octagons; drag to move through the hyperbolic plane"></canvas>
+    <p class="caption">
+      Drag to move through the hyperbolic plane. Regular octagons with all angles equal
+      to π/4 tile the Poincaré disk, eight meeting at every corner. Gluing opposite sides
+      of the highlighted octagon (matching colours
+      <span class="legend" aria-hidden="true"><i style="background:#d1495b"></i><i style="background:#e09f3e"></i><i style="background:#2a9d8f"></i><i style="background:#7b68b5"></i></span>)
+      gives the Bolza surface, the most symmetric closed surface of genus 2.
+    </p>
+  </div>
+
+  <h2>Outside of mathematics</h2>
+  <p>When I'm not doing mathematics, you'll most likely find me out running.</p>
+  <figure>
+    <img class="photo" src="running.jpg" width="1200" height="800" loading="lazy"
+         alt="Luca running in a race along a path lined with trees and reeds">
+    <figcaption>Greifenseelauf 2026</figcaption>
+  </figure>
+
   <footer>Last updated October 2026</footer>
 </main>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Theme toggle ---------- */
+  var root = document.documentElement;
+  var darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function effectiveTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return darkQuery && darkQuery.matches ? 'dark' : 'light';
+  }
+  var redrawers = [];
+  function redrawAll() { redrawers.forEach(function (f) { f(); }); }
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    redrawAll();
+  });
+  if (darkQuery && darkQuery.addEventListener) darkQuery.addEventListener('change', redrawAll);
+
+  function cssVar(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setupCanvas(canvas) {
+    var dpr = window.devicePixelRatio || 1;
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx: ctx, w: w, h: h };
+  }
+
+  /* ---------- Random tree from a random walk excursion ---------- */
+  var treeCanvas = document.getElementById('tree-canvas');
+  var treeN = 1500, tree = null, treeStart = 0, treeAnim = null;
+
+  function randomTree(n) {
+    // n up-steps and n+1 down-steps, shuffled; the cycle lemma turns this into a uniform Dyck path
+    var steps = new Int8Array(2 * n + 1), i;
+    for (i = 0; i < 2 * n + 1; i++) steps[i] = i < n ? 1 : -1;
+    for (i = steps.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1)), tmp = steps[i]; steps[i] = steps[j]; steps[j] = tmp;
+    }
+    var s = 0, min = 0, argmin = 0;
+    for (i = 0; i < steps.length; i++) { s += steps[i]; if (s < min) { min = s; argmin = i + 1; } }
+    var path = new Int8Array(2 * n);
+    for (i = 0; i < 2 * n; i++) path[i] = steps[(argmin + i) % steps.length];
+
+    var parent = new Int32Array(n + 1), depth = new Int32Array(n + 1);
+    var first = new Float64Array(n + 1), last = new Float64Array(n + 1);
+    var height = new Int32Array(2 * n + 1);
+    var stack = [0], next = 1, maxDepth = 1;
+    parent[0] = -1; first[0] = 0; last[0] = 2 * n;
+    for (i = 0; i < 2 * n; i++) {
+      if (path[i] === 1) {
+        var v = next++, top = stack[stack.length - 1];
+        parent[v] = top; depth[v] = depth[top] + 1; first[v] = i + 1;
+        if (depth[v] > maxDepth) maxDepth = depth[v];
+        stack.push(v);
+      } else {
+        last[stack.pop()] = i + 1;
+      }
+      height[i + 1] = stack.length - 1;
+    }
+    var x = new Float64Array(n + 1);
+    for (i = 0; i <= n; i++) x[i] = (first[i] + last[i]) / 2 / (2 * n);
+    // Vertices are numbered in order of discovery, so parents always come first
+    var lx = new Float64Array(n + 1), ly = new Float64Array(n + 1);
+    var minX = 0, maxX = 0, minY = 0, maxY = 0;
+    for (i = 1; i <= n; i++) {
+      var a = 2 * Math.PI * x[i] - Math.PI / 2;
+      lx[i] = lx[parent[i]] + Math.cos(a); ly[i] = ly[parent[i]] + Math.sin(a);
+      if (lx[i] < minX) minX = lx[i]; if (lx[i] > maxX) maxX = lx[i];
+      if (ly[i] < minY) minY = ly[i]; if (ly[i] > maxY) maxY = ly[i];
+    }
+    return { n: n, parent: parent, depth: depth, x: x, first: first, height: height, maxDepth: maxDepth,
+             layout: { x: lx, y: ly, minX: minX - 1e-9, maxX: maxX + 1e-9, minY: minY - 1e-9, maxY: maxY + 1e-9 } };
+  }
+
+  function drawTree(progress) {
+    var c = setupCanvas(treeCanvas), ctx = c.ctx, w = c.w, h = c.h;
+    ctx.clearRect(0, 0, w, h);
+    if (!tree) return;
+    var pad = 10, stripH = Math.round(h * 0.16), gap = 14;
+    var treeH = h - stripH - gap - 2 * pad;
+    var X = function (t) { return pad + t * (w - 2 * pad); };
+    // Equal-length edges, each pointing in the direction of the part of the
+    // exploration (the stretch of the walk below) that visits its subtree
+    var L = tree.layout, sc = Math.min((w - 2 * pad) / (L.maxX - L.minX), treeH / (L.maxY - L.minY));
+    var offX = pad + ((w - 2 * pad) - sc * (L.maxX - L.minX)) / 2 - sc * L.minX;
+    var offY = pad + (treeH - sc * (L.maxY - L.minY)) / 2 - sc * L.minY;
+    var shown = Math.floor(progress * tree.n);
+    var accent = cssVar('--accent'), muted = cssVar('--muted'), rule = cssVar('--rule');
+
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = tree.n > 3000 ? 0.7 : tree.n > 800 ? 1 : 1.6;
+    ctx.lineCap = 'round';
+    ctx.globalAlpha = 0.9;
+    ctx.beginPath();
+    for (var v = 1; v <= shown; v++) {
+      var p = tree.parent[v];
+      ctx.moveTo(offX + sc * L.x[p], offY + sc * L.y[p]);
+      ctx.lineTo(offX + sc * L.x[v], offY + sc * L.y[v]);
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = accent;
+    ctx.beginPath(); ctx.arc(offX + sc * L.x[0], offY + sc * L.y[0], 3.5, 0, 2 * Math.PI); ctx.fill();
+
+    // The encoding excursion (contour function)
+    var base = h - pad, top = base - stripH;
+    ctx.strokeStyle = rule; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, base + 0.5); ctx.lineTo(w - pad, base + 0.5); ctx.stroke();
+    var T = 2 * tree.n, tMax = Math.floor(progress * T);
+    var maxH = 1; for (var t = 0; t <= T; t++) if (tree.height[t] > maxH) maxH = tree.height[t];
+    ctx.strokeStyle = muted; ctx.lineWidth = 1;
+    ctx.beginPath();
+    var stride = Math.max(1, Math.floor(T / (w * 2)));
+    for (t = 0; t <= tMax; t += stride) {
+      var qx = X(t / T), qy = base - tree.height[t] / maxH * (stripH - 4);
+      if (t === 0) ctx.moveTo(qx, qy); else ctx.lineTo(qx, qy);
+    }
+    ctx.stroke();
+  }
+
+  function growTree() {
+    tree = randomTree(treeN);
+    if (treeAnim) cancelAnimationFrame(treeAnim);
+    if (reducedMotion) { drawTree(1); return; }
+    treeStart = performance.now();
+    var dur = 1800;
+    (function frame(now) {
+      var p = Math.min(1, (now - treeStart) / dur);
+      drawTree(1 - Math.pow(1 - p, 2));
+      if (p < 1) treeAnim = requestAnimationFrame(frame);
+    })(treeStart);
+  }
+
+  document.getElementById('tree-new').addEventListener('click', growTree);
+  Array.prototype.forEach.call(document.querySelectorAll('.btn[data-n]'), function (b) {
+    b.addEventListener('click', function () {
+      treeN = +b.getAttribute('data-n');
+      document.querySelectorAll('.btn[data-n]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      growTree();
+    });
+  });
+  redrawers.push(function () { drawTree(1); });
+
+  /* ---------- Bolza surface: {8,8} tiling of the Poincaré disk ---------- */
+  var C = function (re, im) { return { re: re, im: im || 0 }; };
+  var add = function (a, b) { return C(a.re + b.re, a.im + b.im); };
+  var sub = function (a, b) { return C(a.re - b.re, a.im - b.im); };
+  var mul = function (a, b) { return C(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re); };
+  var conj = function (a) { return C(a.re, -a.im); };
+  var abs2 = function (a) { return a.re * a.re + a.im * a.im; };
+  var div = function (a, b) { var d = abs2(b); return C((a.re * b.re + a.im * b.im) / d, (a.im * b.re - a.re * b.im) / d); };
+  var csqrt = function (a) {
+    var r = Math.sqrt(abs2(a));
+    return C(Math.sqrt((r + a.re) / 2), (a.im < 0 ? -1 : 1) * Math.sqrt(Math.max(0, (r - a.re) / 2)));
+  };
+  // Möbius maps as [a, b, c, d] : z -> (az + b) / (cz + d)
+  var mob = function (M, z) { return div(add(mul(M[0], z), M[1]), add(mul(M[2], z), M[3])); };
+  var mmul = function (M, N) {
+    return [add(mul(M[0], N[0]), mul(M[1], N[2])), add(mul(M[0], N[1]), mul(M[1], N[3])),
+            add(mul(M[2], N[0]), mul(M[3], N[2])), add(mul(M[2], N[1]), mul(M[3], N[3]))];
+  };
+  var mnorm = function (M) {
+    var s = csqrt(sub(mul(M[0], M[3]), mul(M[1], M[2])));
+    return M.map(function (x) { return div(x, s); });
+  };
+  var translation = function (w) { return [C(1), w, conj(w), C(1)]; }; // takes 0 to w
+
+  // Geodesic through a and b: a diameter, or a circle orthogonal to the unit circle
+  function geodesic(a, b) {
+    if (abs2(a) < 1e-12) { var t = a; a = b; b = t; }
+    var cross = a.re * b.im - a.im * b.re;
+    if (Math.abs(cross) < 1e-10) {
+      var r = Math.sqrt(abs2(a)) || 1;
+      return { line: true, u: C(a.re / r, a.im / r) };
+    }
+    var p = a, q = b, s = div(C(1), conj(a)); // s = a / |a|^2
+    var D = 2 * (p.re * (q.im - s.im) + q.re * (s.im - p.im) + s.re * (p.im - q.im));
+    var P = abs2(p), Q = abs2(q), S = abs2(s);
+    var c = C((P * (q.im - s.im) + Q * (s.im - p.im) + S * (p.im - q.im)) / D,
+              (P * (s.re - q.re) + Q * (p.re - s.re) + S * (q.re - p.re)) / D);
+    return { line: false, c: c, r2: abs2(sub(a, c)) };
+  }
+  function reflect(z, g) {
+    if (g.line) {
+      var d = z.re * g.u.re + z.im * g.u.im;
+      return C(2 * d * g.u.re - z.re, 2 * d * g.u.im - z.im);
+    }
+    var w = sub(z, g.c), k = g.r2 / abs2(w);
+    return C(g.c.re + k * w.re, g.c.im + k * w.im);
+  }
+
+  // Regular octagon with interior angles π/4: cosh(circumradius) = cot²(π/8)
+  var Rdisk = Math.tanh(Math.acosh(Math.pow(1 / Math.tan(Math.PI / 8), 2)) / 2);
+  var baseVerts = [];
+  for (var k = 0; k < 8; k++) baseVerts.push(C(Rdisk * Math.cos(Math.PI / 8 + k * Math.PI / 4), Rdisk * Math.sin(Math.PI / 8 + k * Math.PI / 4)));
+  // Side pairings of the Bolza surface: translations taking the octagon to its neighbour across side k
+  var deck = [];
+  for (k = 0; k < 8; k++) deck.push(translation(reflect(C(0), geodesic(baseVerts[k], baseVerts[(k + 1) % 8]))));
+
+  var diskCanvas = document.getElementById('disk-canvas');
+  var G = [C(1), C(0), C(0), C(1)];
+  var pairColors = ['#d1495b', '#e09f3e', '#2a9d8f', '#7b68b5'];
+  var diskScheduled = false, userMoved = false, visible = true;
+
+  function recentre() {
+    // Replace G by G∘g for a deck transformation g whenever that brings the highlighted octagon closer to the centre
+    for (var it = 0; it < 12; it++) {
+      var best = -1, bestD = abs2(mob(G, C(0))) - 1e-9;
+      for (var k = 0; k < 8; k++) {
+        var d = abs2(mob(mmul(G, deck[k]), C(0)));
+        if (d < bestD) { bestD = d; best = k; }
+      }
+      if (best < 0) break;
+      G = mnorm(mmul(G, deck[best]));
+    }
+  }
+
+  function drawDisk() {
+    diskScheduled = false;
+    var c = setupCanvas(diskCanvas), ctx = c.ctx, size = Math.min(c.w, c.h);
+    var R = size / 2 - 3, cx = c.w / 2, cy = c.h / 2;
+    var S = function (z) { return [cx + R * z.re, cy - R * z.im]; };
+    var accent = cssVar('--accent'), muted = cssVar('--muted'), bg = cssVar('--bg');
+    ctx.clearRect(0, 0, c.w, c.h);
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.fill();
+
+    function polyPath(verts, geos) {
+      var p0 = S(verts[0]);
+      ctx.moveTo(p0[0], p0[1]);
+      for (var k = 0; k < 8; k++) {
+        var b = verts[(k + 1) % 8], g = geos[k], pb = S(b);
+        if (g.line) { ctx.lineTo(pb[0], pb[1]); continue; }
+        var pc = S(g.c), pa = S(verts[k]);
+        var t0 = Math.atan2(pa[1] - pc[1], pa[0] - pc[0]), t1 = Math.atan2(pb[1] - pc[1], pb[0] - pc[0]);
+        var dt = t1 - t0; while (dt > Math.PI) dt -= 2 * Math.PI; while (dt < -Math.PI) dt += 2 * Math.PI;
+        ctx.arc(pc[0], pc[1], Math.sqrt(g.r2) * R, t0, t0 + dt, dt < 0);
+      }
+      ctx.closePath();
+    }
+    function geosOf(v) { var g = []; for (var k = 0; k < 8; k++) g.push(geodesic(v[k], v[(k + 1) % 8])); return g; }
+
+    var first = { v: baseVerts.map(function (z) { return mob(G, z); }), c: mob(G, C(0)), parity: 0 };
+    var queue = [first], seen = {}, count = 0, drawnBase = null;
+    var key = function (z) { return Math.round(z.re * 5000) + ',' + Math.round(z.im * 5000); };
+    seen[key(first.c)] = true;
+    ctx.lineWidth = 0.8;
+    while (queue.length && count < 6000) {
+      var P = queue.shift(); count++;
+      var sz = 0;
+      for (var i = 0; i < 8; i++) sz = Math.max(sz, Math.sqrt(abs2(sub(P.v[i], P.c))));
+      sz *= R;
+      if (sz < 0.6) continue;
+      var geos = geosOf(P.v);
+      ctx.beginPath(); polyPath(P.v, geos);
+      if (P.parity) { ctx.globalAlpha = 0.10; ctx.fillStyle = accent; ctx.fill(); }
+      ctx.globalAlpha = 0.55; ctx.strokeStyle = muted; ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (count === 1) drawnBase = { v: P.v, geos: geos };
+      if (sz < 3) continue;
+      for (i = 0; i < 8; i++) {
+        var nc = reflect(P.c, geos[i]), kk = key(nc);
+        if (seen[kk]) continue;
+        seen[kk] = true;
+        queue.push({ v: P.v.map(function (z) { return reflect(z, geos[i]); }), c: nc, parity: 1 - P.parity });
+      }
+    }
+
+    if (drawnBase) {
+      ctx.beginPath(); polyPath(drawnBase.v, drawnBase.geos);
+      ctx.globalAlpha = 0.28; ctx.fillStyle = accent; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.lineWidth = 3.2; ctx.lineCap = 'round';
+      for (var s = 0; s < 8; s++) {
+        var a = drawnBase.v[s], b = drawnBase.v[(s + 1) % 8], g = drawnBase.geos[s];
+        var pa = S(a), pb = S(b);
+        ctx.strokeStyle = pairColors[s % 4];
+        ctx.beginPath(); ctx.moveTo(pa[0], pa[1]);
+        if (g.line) ctx.lineTo(pb[0], pb[1]);
+        else {
+          var pc = S(g.c), t0 = Math.atan2(pa[1] - pc[1], pa[0] - pc[0]), t1 = Math.atan2(pb[1] - pc[1], pb[0] - pc[0]);
+          var dt = t1 - t0; while (dt > Math.PI) dt -= 2 * Math.PI; while (dt < -Math.PI) dt += 2 * Math.PI;
+          ctx.arc(pc[0], pc[1], Math.sqrt(g.r2) * R, t0, t0 + dt, dt < 0);
+        }
+        ctx.stroke();
+      }
+    }
+    ctx.strokeStyle = muted; ctx.lineWidth = 1.2; ctx.globalAlpha = 0.8;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  function scheduleDisk() { if (!diskScheduled) { diskScheduled = true; requestAnimationFrame(drawDisk); } }
+
+  function toDisk(e) {
+    var r = diskCanvas.getBoundingClientRect(), size = Math.min(r.width, r.height), R = size / 2 - 3;
+    var z = C((e.clientX - r.left - r.width / 2) / R, -(e.clientY - r.top - r.height / 2) / R);
+    var m = Math.sqrt(abs2(z));
+    if (m > 0.97) z = C(z.re * 0.97 / m, z.im * 0.97 / m);
+    return z;
+  }
+  var dragFrom = null;
+  diskCanvas.addEventListener('pointerdown', function (e) {
+    userMoved = true; dragFrom = toDisk(e);
+    diskCanvas.setPointerCapture(e.pointerId);
+  });
+  diskCanvas.addEventListener('pointermove', function (e) {
+    if (!dragFrom) return;
+    var to = toDisk(e);
+    // hyperbolic translation taking dragFrom to `to`
+    G = mnorm(mmul(mmul(translation(to), translation(C(-dragFrom.re, -dragFrom.im))), G));
+    recentre();
+    dragFrom = to;
+    scheduleDisk();
+  });
+  ['pointerup', 'pointercancel'].forEach(function (ev) {
+    diskCanvas.addEventListener(ev, function () { dragFrom = null; });
+  });
+  document.getElementById('disk-reset').addEventListener('click', function () {
+    G = [C(1), C(0), C(0), C(1)]; userMoved = true; scheduleDisk();
+  });
+
+  // A slow drift through the plane until the visitor takes over
+  if (!reducedMotion) {
+    var t0 = performance.now();
+    (function drift(now) {
+      if (userMoved) return;
+      if (visible) {
+        var th = (now - t0) / 9000;
+        G = mnorm(mmul(translation(C(0.0035 * Math.cos(th), 0.0035 * Math.sin(th * 0.7))), G));
+        recentre();
+        drawDisk();
+      }
+      requestAnimationFrame(drift);
+    })(t0);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; }).observe(diskCanvas);
+  }
+  redrawers.push(scheduleDisk);
+
+  /* ---------- Initial draw and resizing ---------- */
+  growTree();
+  drawDisk();
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(redrawAll, 120);
+  });
+})();
+</script>
 </body>
 </html>
